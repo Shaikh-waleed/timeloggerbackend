@@ -1,0 +1,35 @@
+﻿@model TimeLogger.Client.Mvc.Models.VerifyCodeViewModel
+@{
+    ViewData["Title"] = "Recovery code verification";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<p>
+    You have requested to login with a recovery code. This login will not be remembered until you provide
+    an otp code at login or disable 2FA and login again.
+</p>
+
+@using (Html.BeginForm("RecoveryCodeLogin", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.UserName)
+    <h4>Enter verification code</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Code, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

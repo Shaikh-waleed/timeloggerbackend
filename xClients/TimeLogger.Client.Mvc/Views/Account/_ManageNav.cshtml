@@ -1,0 +1,24 @@
+﻿@using TimeLogger.Client.Mvc.Views.Account
+@using TimeLogger.Client.Mvc.Models
+@using TimeLogger.Client.Mvc.Helpers
+@{
+    var identity = (System.Security.Claims.ClaimsPrincipal)System.Threading.Thread.CurrentPrincipal;
+    var accessToken = identity.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.PrimarySid).Select(c => c.Value).SingleOrDefault();
+    var authenticationResponse = System.Threading.Tasks.Task.Run(async () =>
+    {
+        return await HttpClientHelper.GetAsync<IdentityUserResponseModel>("api/Account/Profile", null, accessToken);
+    }).Result;
+    var hasPassword = authenticationResponse == null
+                            ? false
+                            : authenticationResponse.Data == null
+                                ? false
+                                : authenticationResponse.Data.HasPassword;
+    var functionName = hasPassword ? "ChangePassword" : "SetPassword";
+}
+<ul class="nav nav-pills nav-stacked">
+    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a href="@Url.Action("UserProfile")">Profile</a></li>
+    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a href="@Url.Action(functionName)">Password</a></li>
+    <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a href="@Url.Action("ManageLogins")">External logins</a></li>
+    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a href="@Url.Action("TwoFactorAuthentication")">Two-factor authentication</a></li>
+</ul>
+

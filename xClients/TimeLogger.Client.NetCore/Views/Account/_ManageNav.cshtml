@@ -1,0 +1,21 @@
+﻿@using TimeLogger.Client.NetCore.Views.Account
+@using TimeLogger.Client.NetCore.Helpers
+
+@{
+    var accessToken = User.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.PrimarySid).Select(c => c.Value).SingleOrDefault();
+    var authenticationResponse = await HttpClientHelper.GetAsync<IdentityUserResponseModel>("api/Account/Profile", null, accessToken);
+    var hasPassword = authenticationResponse == null 
+                            ? false
+                            : authenticationResponse.Data == null
+                                ? false
+                                : authenticationResponse.Data.HasPassword;
+    var functionName = hasPassword ? "ChangePassword" : "SetPassword";
+}
+
+<ul class="nav nav-pills nav-stacked">
+    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="UserProfile">Profile</a></li>
+    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action=@functionName>Password</a></li>
+    <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ManageLogins">External logins</a></li>
+    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Two-factor authentication</a></li>
+</ul>
+

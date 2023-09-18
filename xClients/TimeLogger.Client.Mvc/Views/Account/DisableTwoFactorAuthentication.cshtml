@@ -1,0 +1,27 @@
+﻿@using TimeLogger.Client.Mvc.Views.Account;
+@{
+    ViewData["Title"] = "Disable two-factor authentication (2FA)";
+    Layout = "~/Views/Account/_Layout.cshtml";
+    ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>This action only disables two-factor authentication.</strong>
+    </p>
+    <p>
+        Disabling two-factor authentication does not change the keys used in authenticator apps. If you wish to change the key
+        used in an authenticator app you should <a href="@Url.Action("ResetAuthenticatorWarning")">reset your authenticator keys.</a>
+    </p>
+</div>
+
+<div>
+    @using (Html.BeginForm("DisableTwoFactorAuthentication", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <button class="btn btn-danger" type="submit">Disable two-factor authentication</button>
+    }
+</div>

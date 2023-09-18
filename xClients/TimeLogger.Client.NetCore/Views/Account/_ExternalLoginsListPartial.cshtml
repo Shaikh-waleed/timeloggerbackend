@@ -1,0 +1,36 @@
+﻿@model List<TimeLogger.Client.NetCore.Models.AuthenticationSchemeModel>
+
+<h4>Use another service to log in.</h4>
+<hr />
+@{
+    var loginProviders = Model;
+    if (loginProviders.Count() == 0)
+    {
+        <div>
+            <p>
+                There are no external authentication services enabled yet. To enable external authentication, make follwoing changes in appsettings.json:
+                <ul>
+                    <li> To enable Microsoft login: Make "MicrosoftAuthenticationAdded": true </li>
+                    <li> To enable Google login: Make "GoogleAuthenticationAdded": true </li>
+                    <li> To enable Twitter login: Make "TwitterAuthenticationAdded": true </li>
+                    <li> To enable Facebok login: Make "FacebookAuthenticationAdded": true </li>
+                </ul>
+                And see <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                for details on setting up this ASP.NET application to support logging in via external services.
+            </p>
+        </div>
+    }
+    else
+    {
+        <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+            <div>
+                <p>
+                    @foreach (var provider in loginProviders)
+                    {
+                        <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
+                    }
+                </p>
+            </div>
+        </form>
+    }
+}

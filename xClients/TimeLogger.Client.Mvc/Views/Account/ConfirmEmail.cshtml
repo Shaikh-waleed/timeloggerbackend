@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = ViewBag.IsConfirmed ? "Email Confirmed" : "Confirm Email";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div>
+    @if (!ViewBag.IsConfirmed)
+    {
+    <p>
+            Thank you for registering in TimeLogger , an activation link has been sent to your email.
+    </p>
+    }
+    else
+    {
+        <p>
+            Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        </p>
+    }
+</div>

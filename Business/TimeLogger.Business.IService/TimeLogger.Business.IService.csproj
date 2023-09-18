@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Component\TimeLogger.Component.Models\TimeLogger.Component.Models.csproj" />
+    <ProjectReference Include="..\..\Data\TimeLogger.Data.Entity\TimeLogger.Data.Entity.csproj" />
+    <ProjectReference Include="..\TimeLogger.Business.Model\TimeLogger.Business.Model.csproj" />
+  </ItemGroup>
+
+</Project>

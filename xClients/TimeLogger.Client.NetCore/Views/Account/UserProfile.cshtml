@@ -1,0 +1,79 @@
+﻿@using TimeLogger.Client.NetCore.Views.Account
+@model IdentityUserResponseModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData.AddActivePage(ManageNavPages.Index);
+    var message = ViewBag.StatusMessage;
+}
+
+<h4>@ViewData["Title"]</h4>
+@*@Html.Partial("_StatusMessage", Model.StatusMessage)*@
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <div class="form-group">
+                <label asp-for="@Model.UserName"></label>
+                <input asp-for="@Model.UserName" class="form-control" disabled />
+            </div>
+            @await Html.PartialAsync("_ChangeEmail", new ChangeEmailViewModel { Email = Model.Email })
+        </div>
+
+        <form asp-action="AddPhoneNumber"
+              data-ajax="true"
+              data-ajax-method="POST"
+              data-ajax-mode="replace"
+              data-ajax-update="#ajaxresult">
+
+            <div id="ajaxresult">
+                @await Html.PartialAsync("_AddPhoneNumber", new AddPhoneNumberViewModel { PhoneNumber = Model.PhoneNumber })
+            </div>
+        </form>
+
+        @*@Html.Partial("_AddPhoneNumber", new AddPhoneNumberViewModel { PhoneNumber = Model.PhoneNumber })*@
+
+        @*<form asp-action="AddPhoneNumber" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.PhoneNumber"></label>
+                <input asp-for="@Model.PhoneNumber" class="form-control" />
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-default">Save</button>
+        </form>*@
+
+        @*<form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.UserName"></label>
+                <input asp-for="@Model.UserName" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Email"></label>
+                @if (Model.IsEmailConfirmed)
+                {
+                    <div class="input-group">
+                        <input asp-for="@Model.Email" class="form-control" />
+                        <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
+                    </div>
+                }
+                else
+                {
+                    <input asp-for="@Model.Email" class="form-control" />
+                    <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                }
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.PhoneNumber"></label>
+                <input asp-for="@Model.PhoneNumber" class="form-control" />
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-default">Save</button>
+        </form>*@
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

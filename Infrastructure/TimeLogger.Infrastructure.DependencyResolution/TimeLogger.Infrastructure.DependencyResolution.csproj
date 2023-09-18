@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Business\TimeLogger.Business.IService\TimeLogger.Business.IService.csproj" />
+    <ProjectReference Include="..\..\Business\TimeLogger.Business.Service\TimeLogger.Business.Service.csproj" />
+    <ProjectReference Include="..\..\Component\TimeLogger.Component.Communication\TimeLogger.Component.Communication.csproj" />
+    <ProjectReference Include="..\..\Component\TimeLogger.Component.Interfaces\TimeLogger.Component.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Component\TimeLogger.Component.Security\TimeLogger.Component.Security.csproj" />
+    <ProjectReference Include="..\..\Data\TimeLogger.Data.Database\TimeLogger.Data.Database.csproj" />
+    <ProjectReference Include="..\..\Data\TimeLogger.Data.IRepository\TimeLogger.Data.IRepository.csproj" />
+    <ProjectReference Include="..\..\Data\TimeLogger.Data.Repository\TimeLogger.Data.Repository.csproj" />
+    <ProjectReference Include="..\TimeLogger.Infrastructure.Configuration\TimeLogger.Infrastructure.Configuration.csproj" />
+    <ProjectReference Include="..\TimeLogger.Infrastructure.Documentation\TimeLogger.Infrastructure.Documentation.csproj" />
+    <ProjectReference Include="..\TimeLogger.Infrastructure.Models\TimeLogger.Infrastructure.Models.csproj" />
+  </ItemGroup>
+
+</Project>

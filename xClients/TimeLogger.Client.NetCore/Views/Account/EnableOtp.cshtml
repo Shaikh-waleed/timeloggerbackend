@@ -1,0 +1,30 @@
+﻿@model VerifyCodeViewModel
+@{
+    ViewData["Title"] = "Enable otp";
+    ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
+}
+
+<h4>@ViewData["Title"]</h4>
+<div>
+    <p>
+        An unique code has been sent to your email address. Enter the code in the confirmation box below.
+    </p>
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="EnableOtp" method="post">
+                <input asp-for="@Model.Provider" type="hidden" />
+                <div class="form-group">
+                    <label asp-for="@Model.Code" class="control-label">Verification Code</label>
+                    <input asp-for="@Model.Code" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="@Model.Code" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-default">Verify</button>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

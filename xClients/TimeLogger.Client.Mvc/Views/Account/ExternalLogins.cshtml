@@ -1,0 +1,72 @@
+﻿@model TimeLogger.Client.Mvc.Models.ExternalLoginsViewModel
+@using TimeLogger.Client.Mvc.Views.Account;
+@{
+    ViewBag.Title = "Manage your external logins";
+    Layout = "~/Views/Account/_Layout.cshtml";
+    ViewData.AddActivePage(ManageNavPages.ExternalLogins);
+}
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+@{
+    if ((Model.CurrentLogins == null && Model.OtherLogins == null) || (Model.CurrentLogins.Count == 0 && Model.OtherLogins.Count == 0))
+    {
+        <div>
+            <p>
+                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=313242">this article</a>
+                for details on setting up this ASP.NET application to support logging in via external services.
+            </p>
+        </div>
+    }
+    else
+    {
+        if (Model.CurrentLogins.Count > 0)
+        {
+            <h4>Registered Logins</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var account in Model.CurrentLogins)
+                    {
+                        <tr>
+                            <td>@account.LoginProvider</td>
+                            <td>
+                                @if (Model.ShowRemoveButton)
+                                {
+                                    using (Html.BeginForm("RemoveLogin", "Account"))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div>
+                                            @Html.Hidden("Provider", account.LoginProvider)
+                                            @Html.Hidden("providerKey", account.ProviderKey)
+                                            <input type="submit" class="btn btn-default" value="Remove" title="Remove this @account.LoginProvider login from your account" />
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    @: &nbsp;
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        if (Model.OtherLogins.Count > 0)
+        {
+            <h4>Add another service to log in.</h4>
+            <hr />
+            using (Html.BeginForm("AddLogin", "Account"))
+            {
+                @Html.AntiForgeryToken()
+                <div id="socialLoginList">
+                    <p>
+                        @foreach (var p in Model.OtherLogins)
+                        {
+                            <button type="submit" class="btn btn-default" id="@p.Name" name="provider" value="@p.DisplayName" title="Log in using your @p.DisplayName account">@p.DisplayName</button>
+                        }
+                    </p>
+                </div>
+            }
+        }
+    }
+}

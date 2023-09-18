@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Component\TimeLogger.Component.Interfaces\TimeLogger.Component.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Data\TimeLogger.Data.IRepository\TimeLogger.Data.IRepository.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\TimeLogger.Infrastructure.Utility\TimeLogger.Infrastructure.Utility.csproj" />
+    <ProjectReference Include="..\TimeLogger.Business.IService\TimeLogger.Business.IService.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,31 @@
+﻿@using TimeLogger.Client.Mvc.Extensions;
+@using TimeLogger.Client.Mvc.Options;
+@if (User.Identity.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @if (SecurityOptions.Service == "AspnetIdentity")
+                {
+                    @Html.ActionLink("Hello " + User.GetFullName() + "!", "UserProfile", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+                }
+                else
+                {
+                    <a href="@SecurityOptions.IdentityServerUrl">Hello @User.GetFullName()!</a>
+                }
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
+
